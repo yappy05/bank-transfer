@@ -12,9 +12,9 @@ import { Prisma, User } from '../../../prisma/generated/client';
 import { FindAllRequest } from './dto/requests/find-all.request.dto';
 import * as argon2 from 'argon2';
 import { FindPopular } from './dto/requests/find-popular.request.dto';
-import { RedisService } from '../../common/infra/redis/redis.service';
 import { TransferMoney } from './dto/requests/transfer-money.request.dto';
 import { PrismaService } from '../../common/infra/prisma/prisma.service';
+import { RedisService } from '@app/my-library/common/infra/redis/redis.service';
 
 @Injectable()
 export class UserService {

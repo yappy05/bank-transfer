@@ -1,5 +1,6 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import {
+  REDIS_OPTION,
   RedisOptions,
   RedisService,
 } from '@app/my-library/common/infra/redis/redis.service';
@@ -8,12 +9,18 @@ import {
   providers: [RedisService],
 })
 export class RedisModule {
-  static forRoot(options: RedisOptions) {
-    const redisProvider = new RedisService(options);
+  static forRoot(options: RedisOptions): DynamicModule {
     return {
       module: RedisModule,
-      providers: redisProvider,
-      exports: redisProvider,
+      global: true,
+      providers: [
+        {
+          provide: REDIS_OPTION,
+          useValue: options,
+        },
+        RedisService,
+      ],
+      exports: [RedisService],
     };
   }
 }

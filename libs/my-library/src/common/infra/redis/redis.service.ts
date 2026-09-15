@@ -1,4 +1,4 @@
-import { Injectable, OnModuleDestroy } from '@nestjs/common';
+import { Inject, Injectable, OnModuleDestroy } from '@nestjs/common';
 import Redis from 'ioredis';
 
 export type RedisOptions = {
@@ -7,9 +7,11 @@ export type RedisOptions = {
   password: string;
 };
 
+export const REDIS_OPTION = 'REDIS_OPTION';
+
 @Injectable()
 export class RedisService extends Redis implements OnModuleDestroy {
-  constructor(options: RedisOptions) {
+  constructor(@Inject(REDIS_OPTION) options: RedisOptions) {
     super({
       host: options.host,
       port: options.port,

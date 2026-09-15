@@ -8,8 +8,8 @@ import {
 import { Observable } from 'rxjs';
 import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
-import { RedisService } from '../../../../../apps/user-service/src/common/infra/redis/redis.service';
 import { EVICTION_KEY } from '../decorators/eviction.decorator';
+import { RedisService } from '@app/my-library/common/infra/redis/redis.service';
 
 @Injectable()
 export class RedisEvictInterceptor implements NestInterceptor {
