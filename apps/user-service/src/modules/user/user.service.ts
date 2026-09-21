@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -15,11 +16,13 @@ import { FindPopular } from './dto/requests/find-popular.request.dto';
 import { TransferMoney } from './dto/requests/transfer-money.request.dto';
 import { PrismaService } from '../../common/infra/prisma/prisma.service';
 import { RedisService } from '@app/my-library/common/infra/redis/redis.service';
+import type { ClientKafkaProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class UserService {
   logger: Logger;
   constructor(
+    @Inject('BALANCE_SERVICE') private readonly clientKafka: ClientKafkaProxy,
     private readonly userRepository: UserRepository,
     private readonly redisService: RedisService,
     private readonly prismaService: PrismaService,
@@ -74,6 +77,11 @@ export class UserService {
         },
         { isolationLevel: 'RepeatableRead', maxWait: 5000, timeout: 3000 },
       );
+      this.clientKafka.emit('notification', {
+        senderId: userId,
+        recipientId: targetUserId,
+        amount,
+      });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2025') {

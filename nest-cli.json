@@ -3,6 +3,8 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "apps/user-service/src",
   "compilerOptions": {
+    "assets": ["**/*.proto"],
+    "watchAssets": true,
     "deleteOutDir": true,
     "webpack": true,
     "tsConfigPath": "apps/user-service/tsconfig.app.json"

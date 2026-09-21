@@ -75,7 +75,7 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  public verifyToken() {
-    return { status: true };
+  public async verifyToken(token: string): Promise<JwtPayload> {
+    return this.jwtService.verifyAsync(token);
   }
 }

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package auth;
+
+service AuthService {
+  rpc VerifyJwt(VerifyJwtRequest) returns(VerifyJwtResponse) {}
+}
+
+message VerifyJwtRequest {
+  string token = 1;
+}
+
+message VerifyJwtResponse {
+  string sub = 1;
+  string login = 2;
+}

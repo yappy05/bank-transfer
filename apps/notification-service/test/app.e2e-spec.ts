@@ -2,14 +2,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { Server } from 'http';
 import request from 'supertest';
-import { NotificationServiceModule } from './../src/notification-service.module';
+import { NotificationModule } from '../src/notification.module';
 
-describe('NotificationServiceController (e2e)', () => {
+describe('NotificationController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [NotificationServiceModule],
+      imports: [NotificationModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
